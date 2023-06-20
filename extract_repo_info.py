@@ -143,7 +143,7 @@ def _sleep_duration(failed_response: requests.Response) -> int:
     )
 
     if rate_limit_remaining < MIN_RATE_LIMIT_REMAINING:
-        sleep_time = rate_limit_reset_date - now
+        sleep_time = max(1, rate_limit_reset_date - now)
         readable_time = strftime("%Y-%m-%d %H:%M:%S", localtime(rate_limit_reset_date))
         logging.warning(
             f"Waiting until rate limiting resets at %s (in %s seconds)",
